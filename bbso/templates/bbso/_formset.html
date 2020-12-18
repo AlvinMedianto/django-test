@@ -1,0 +1,23 @@
+{% load crispy_forms_tags %}
+{% load static %}
+<style type="text/css">
+    .delete-row {
+      align-self: center;
+    }
+</style>
+{{ formset.management_form|crispy }}
+{% for form in formset.forms %}
+    {% for hidden in form.hidden_fields %}
+        {{ hidden|as_crispy_field }}
+    {% endfor %}
+    {% crispy form %}
+{% endfor %}
+<br>
+<script src="{% static 'js/jquery.formset.js' %}"></script>
+<script type="text/javascript">
+    $('.formset_row-{{ formset.prefix }}').formset({
+        addText: 'Add Row',
+        deleteText: 'Delete',
+        prefix: '{{ formset.prefix }}',
+    });
+</script>
